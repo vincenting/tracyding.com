@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 16
       - run: npm install -g yarn
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile --production
       - run: yarn build
       - uses: actions/upload-artifact@master
         with:
@@ -48,5 +48,6 @@ jobs:
           path: out
 
       - name: Copy files to the test website with the AWS CLI
+        if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
         run: |
           aws s3 sync out s3://tracy-ding-www/
