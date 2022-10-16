@@ -1,0 +1,26 @@
+name: "Build Static Site"
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: 'Next.js static build'
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - run: npm install -g yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+
+    
