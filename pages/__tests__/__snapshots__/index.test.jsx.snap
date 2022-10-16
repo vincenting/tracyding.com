@@ -1,21 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Home Page should render Home page as expected 1`] = `
-<div
-  className="container"
+<main
+  className="container max-w-md mx-auto overflow-hidden md:max-w-2xl mt-3"
 >
-  <Head>
-    <title>
-      Tracy Ding's Portfolio
-    </title>
-  </Head>
-  <main>
-    <p>
-      Dear Visitors, I'm Tracy. 
-    </p>
-    <p>
-      My Portfolio Website is coming soon.
-    </p>
-  </main>
-</div>
+  <h3
+    className="indent-3"
+  >
+    Dear Visitors, I'm Tracy. 😊
+  </h3>
+  <p
+    className="indent-3"
+  >
+    My Portfolio Website is coming soon. 
+  </p>
+</main>
 `;
