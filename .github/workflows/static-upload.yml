@@ -12,7 +12,6 @@ jobs:
   build:
     name: 'Next.js static build'
     runs-on: ubuntu-latest
-    environment: production
 
     steps:
       - uses: actions/checkout@v2
@@ -31,10 +30,14 @@ jobs:
   deploy:
     name: 'Deploy to AWS S3'
     runs-on: ubuntu-latest
-    environment: production
     needs: build
 
     steps:
+      - name: Set env to production
+        if: endsWith(github.ref_name, 'main')
+        run: |
+          echo "ENVIRONMENT=production" >> $GITHUB_ENV
+
       - name: Configure AWS credentials from Test account
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -48,6 +51,6 @@ jobs:
           path: out
 
       - name: Copy files to the test website with the AWS CLI
-        if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+        if: github.ref_name == 'main' && github.event_name == 'push'
         run: |
           aws s3 sync out s3://tracy-ding-www/
