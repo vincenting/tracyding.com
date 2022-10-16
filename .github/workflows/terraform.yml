@@ -35,8 +35,16 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate -no-color
-      
+        
+      - name: Terraform Plan
+        run: terraform plan -input=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       - name: Terraform Apply
+        if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
