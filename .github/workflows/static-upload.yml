@@ -48,6 +48,6 @@ jobs:
           path: out
 
       - name: Copy files to the test website with the AWS CLI
-        if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+        if: github.ref_name == 'main' && github.event_name == 'push'
         run: |
           aws s3 sync out s3://tracy-ding-www/

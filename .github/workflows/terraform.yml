@@ -44,7 +44,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+        if: github.ref_name == 'main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
