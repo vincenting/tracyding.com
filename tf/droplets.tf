@@ -44,6 +44,20 @@ resource "aws_cloudfront_origin_access_identity" "read_s3_from_cf" {
   comment = "Allow CloudFront to read files from S3"
 }
 
+resource "aws_cloudfront_response_headers_policy" "cache_control" {
+  name    = "cache-control-policy"
+  comment = "Force the assets cached in browser"
+
+  custom_headers_config {
+    items {
+      header   = "Cache-Control"
+      override = true
+      value    = "public, max-age=31536000"
+    }
+  }
+}
+
+
 resource "aws_cloudfront_distribution" "website" {
   origin {
     domain_name = aws_s3_bucket.website.bucket_regional_domain_name
@@ -69,6 +83,8 @@ resource "aws_cloudfront_distribution" "website" {
     min_ttl                = 86400
     default_ttl            = 259200
     max_ttl                = 864000
+
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.cache_control.id
 
     forwarded_values {
       query_string = false
