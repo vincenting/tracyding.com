@@ -4,11 +4,12 @@ export default function Home() {
   return (
     <div className="container">
       <Head>
-        <title>Tracy Ding's Personal Site</title>
+        <title>Tracy Ding's Portfolio</title>
       </Head>
 
       <main>
-        Coming Soon
+        <p>Hi, I'm Tracy. </p>
+        <p>My Portfolio Website is coming soon.</p>
       </main>
     </div>
   )
