@@ -66,9 +66,9 @@ resource "aws_cloudfront_distribution" "website" {
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
     target_origin_id       = local.website_s3_origin_id
-    min_ttl                = 0
-    default_ttl            = 7200
-    max_ttl                = 86400
+    min_ttl                = 86400
+    default_ttl            = 259200
+    max_ttl                = 864000
 
     forwarded_values {
       query_string = false
