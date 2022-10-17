@@ -2,17 +2,28 @@
 
 exports[`Home Page should render Home page as expected 1`] = `
 <main
-  className="container max-w-md mx-auto overflow-hidden md:max-w-2xl mt-3"
+  className="w-screen h-screen overflow-hidden flex bg-orange-100"
 >
-  <h3
-    className="indent-3"
+  <div
+    className="w-fit h-48 self-center ml-auto mr-auto container"
   >
-    Dear Visitors, I'm Tracy. 😊
-  </h3>
-  <p
-    className="indent-3"
-  >
-    My Portfolio Website is coming soon. 
-  </p>
+    <h3
+      className="text-lg text-center"
+    >
+      Dear visitor, I'm 
+      <span
+        className="text-pink-500 underline cursor-pointer"
+        onClick={[Function]}
+      >
+        Tracy.
+      </span>
+       😊
+    </h3>
+    <p
+      className="mt-2"
+    >
+      My Portfolio Website is coming soon. 
+    </p>
+  </div>
 </main>
 `;
