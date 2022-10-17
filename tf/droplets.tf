@@ -74,6 +74,12 @@ resource "aws_cloudfront_distribution" "website" {
   aliases             = [var.root_domain_name]
   http_version        = "http2and3"
 
+  custom_error_response {
+    error_code         = 403
+    response_code      = 404
+    response_page_path = "/404.html"
+  }
+
   default_cache_behavior {
     allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD"]
