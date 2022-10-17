@@ -2,17 +2,18 @@ locals {
   website_s3_origin_id = "websiteOriginalId"
 }
 
-resource "aws_s3_bucket" "website" {
+
+resource "aws_s3_bucket" "static_site" {
   bucket = var.hosting_s3_bucket_name
 }
 
-resource "aws_s3_bucket_acl" "website" {
-  bucket = aws_s3_bucket.website.bucket
+resource "aws_s3_bucket_acl" "static_site" {
+  bucket = aws_s3_bucket.static_site.bucket
   acl    = "private"
 }
 
-resource "aws_s3_bucket_website_configuration" "website" {
-  bucket = aws_s3_bucket.website.bucket
+resource "aws_s3_bucket_website_configuration" "static_site" {
+  bucket = aws_s3_bucket.static_site.bucket
 
   index_document {
     suffix = "index.html"
@@ -22,22 +23,21 @@ resource "aws_s3_bucket_website_configuration" "website" {
     key = "error.html"
   }
 }
+resource "aws_s3_bucket_policy" "static_site" {
+  bucket = aws_s3_bucket.static_site.id
+  policy = data.aws_iam_policy_document.s3_policy.json
+}
 
 data "aws_iam_policy_document" "s3_policy" {
   statement {
     actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.website.arn}/*"]
+    resources = ["${aws_s3_bucket.static_site.arn}/*"]
 
     principals {
       type        = "AWS"
       identifiers = [aws_cloudfront_origin_access_identity.read_s3_from_cf.iam_arn]
     }
   }
-}
-
-resource "aws_s3_bucket_policy" "example" {
-  bucket = aws_s3_bucket.website.id
-  policy = data.aws_iam_policy_document.s3_policy.json
 }
 
 resource "aws_cloudfront_origin_access_identity" "read_s3_from_cf" {
@@ -60,7 +60,7 @@ resource "aws_cloudfront_response_headers_policy" "cache_control" {
 
 resource "aws_cloudfront_distribution" "website" {
   origin {
-    domain_name = aws_s3_bucket.website.bucket_regional_domain_name
+    domain_name = aws_s3_bucket.static_site.bucket_regional_domain_name
     origin_id   = local.website_s3_origin_id
 
     s3_origin_config {

@@ -40,7 +40,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          aws-region: ap-east-1
 
       - uses: actions/download-artifact@master
         with:
@@ -50,4 +50,4 @@ jobs:
       - name: Copy files to the test website with the AWS CLI
         if: github.ref_name == 'main' && github.event_name == 'push'
         run: |
-          aws s3 sync out s3://tracy-ding-www/
+          aws s3 sync out s3://tracy-static-bucket/

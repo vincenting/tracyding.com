@@ -3,6 +3,7 @@ resource "aws_route53_zone" "primary" {
 }
 
 resource "aws_acm_certificate" "certificate" {
+  provider          = aws.us_region
   domain_name       = var.root_domain_name
   validation_method = "DNS"
 
@@ -29,6 +30,8 @@ resource "aws_route53_record" "certificate" {
 }
 
 resource "aws_acm_certificate_validation" "certificate" {
+  provider = aws.us_region
+
   certificate_arn         = aws_acm_certificate.certificate.arn
   validation_record_fqdns = [for record in aws_route53_record.certificate : record.fqdn]
 }
