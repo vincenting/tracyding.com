@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react'
+import Image from 'next/image'
+import TracyPortrait from '../images/tracy_portrait.png'
 
 export default function Home () {
   const audio = useRef()
@@ -15,7 +17,14 @@ export default function Home () {
 
   return (
     <main className="w-screen h-screen overflow-hidden flex bg-orange-100">
-      <div className='w-fit h-48 self-center ml-auto mr-auto container'>
+      <div className='w-fit self-center ml-auto mr-auto container'>
+        <div className='w-1/3 ml-auto mr-auto lg:mb-10 mb-4'>
+          <Image
+            src={TracyPortrait}
+            alt="Tracy's Portrait"
+            className='ml-auto mr-auto'
+          />
+        </div>
         <h3 className='text-lg text-center'>
           Dear visitor,
           I&apos;m <span onClick={playHelloFromTracy} className='text-pink-500 underline cursor-pointer'>Tracy.</span> 😊

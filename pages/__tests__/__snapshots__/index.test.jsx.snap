@@ -5,8 +5,24 @@ exports[`Home Page should render Home page as expected 1`] = `
   className="w-screen h-screen overflow-hidden flex bg-orange-100"
 >
   <div
-    className="w-fit h-48 self-center ml-auto mr-auto container"
+    className="w-fit self-center ml-auto mr-auto container"
   >
+    <div
+      className="w-1/3 ml-auto mr-auto lg:mb-10 mb-4"
+    >
+      <Image
+        alt="Tracy's Portrait"
+        className="ml-auto mr-auto"
+        src={
+          {
+            "blurDataURL": "data:image/png;base64,imagedata",
+            "height": 24,
+            "src": "/img.jpg",
+            "width": 24,
+          }
+        }
+      />
+    </div>
     <h3
       className="text-lg text-center"
     >
