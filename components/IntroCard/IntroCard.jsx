@@ -1,8 +1,10 @@
 import dynamic from 'next/dynamic'
 import React, { useEffect, useRef } from 'react'
+import { DotLoader } from 'react-spinners'
 
 const WelcomeAnimation = dynamic(() => import('../WelcomeAnimation/WelcomeAnimation'), {
-  ssr: false
+  ssr: false,
+  loading: () => <div className='w-1/3 ml-auto mr-auto mb-20'><DotLoader color="#7CDA6E" /></div>
 })
 
 export default function IntroCard (props) {
