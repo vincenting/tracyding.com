@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "next build && next export && node ./scripts/make-critical.mjs",
     "start": "next start",
     "test": "jest",
     "lint": "eslint ."
@@ -22,8 +22,10 @@
     "react-spinners": "^0.13.6"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^12.3.1",
     "@next/eslint-plugin-next": "^12.3.1",
     "autoprefixer": "^10.4.12",
+    "critical": "^5.0.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "enzyme-to-json": "^3.6.2",
