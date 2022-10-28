@@ -24,7 +24,7 @@
   "devDependencies": {
     "@next/bundle-analyzer": "^12.3.1",
     "@next/eslint-plugin-next": "^12.3.1",
-    "autoprefixer": "^10.4.12",
+    "autoprefixer": "^10.4.13",
     "critical": "^5.0.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
