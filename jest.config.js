@@ -6,7 +6,7 @@ const createJestConfig = nextJest({ dir: './' })
 const config = {
   verbose: true,
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  snapshotSerializers: ['enzyme-to-json/serializer']
+  testEnvironment: 'jsdom'
 }
 
 module.exports = createJestConfig(config)

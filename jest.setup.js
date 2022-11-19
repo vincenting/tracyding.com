@@ -1,4 +1,8 @@
-const Adapter = require('enzyme-adapter-react-16')
-const { configure } = require('enzyme')
+/* eslint-disable no-undef */
 
-configure({ adapter: new Adapter() })
+jest.mock('next/dynamic', () => () => {
+  const DynamicComponent = () => null
+  DynamicComponent.displayName = 'LoadableComponent'
+  DynamicComponent.preload = jest.fn()
+  return DynamicComponent
+})

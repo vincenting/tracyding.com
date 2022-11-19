@@ -70,7 +70,6 @@ const WelcomeAnimation = () => {
           className='ml-auto mr-auto'
           width={246}
           height={570}
-          layout="responsive"
         />
       </div>
       <div className='absolute w-full h-3/4 left-0 top-0' ref={animDom}></div>
