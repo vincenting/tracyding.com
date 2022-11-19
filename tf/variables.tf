@@ -3,5 +3,5 @@ variable "root_domain_name" {
 }
 
 variable "hosting_s3_bucket_name" {
-  default = "tracy-static-bucket"
+  default = "tracyding-com-website"
 }

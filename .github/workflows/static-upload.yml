@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build:
-    name: 'Next.js static build'
+    name: "Next.js static build"
     runs-on: ubuntu-latest
     environment: production
 
@@ -27,9 +27,8 @@ jobs:
           name: static-output
           path: out
 
-
   deploy:
-    name: 'Deploy to AWS S3'
+    name: "Deploy to AWS S3"
     runs-on: ubuntu-latest
     environment: production
     needs: build
@@ -50,4 +49,4 @@ jobs:
       - name: Copy files to the test website with the AWS CLI
         if: github.ref_name == 'main' && github.event_name == 'push'
         run: |
-          aws s3 sync out s3://tracy-static-bucket/
+          aws s3 sync out s3://tracyding-com-website/

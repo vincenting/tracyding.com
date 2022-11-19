@@ -2,6 +2,20 @@ locals {
   website_s3_origin_id = "websiteOriginalId"
 }
 
+module "acm_request_certificate" {
+  source = "cloudposse/acm-request-certificate/aws"
+  providers = {
+    aws = aws.us_region
+  }
+
+  ttl                       = "300"
+  zone_id                   = aws_route53_zone.primary.zone_id
+  domain_name               = var.root_domain_name
+  subject_alternative_names = ["www.${var.root_domain_name}"]
+
+  wait_for_certificate_issued       = true
+  process_domain_validation_options = true
+}
 
 resource "aws_s3_bucket" "static_site" {
   bucket = var.hosting_s3_bucket_name
@@ -12,17 +26,6 @@ resource "aws_s3_bucket_acl" "static_site" {
   acl    = "private"
 }
 
-resource "aws_s3_bucket_website_configuration" "static_site" {
-  bucket = aws_s3_bucket.static_site.bucket
-
-  index_document {
-    suffix = "index.html"
-  }
-
-  error_document {
-    key = "error.html"
-  }
-}
 resource "aws_s3_bucket_policy" "static_site" {
   bucket = aws_s3_bucket.static_site.id
   policy = data.aws_iam_policy_document.s3_policy.json
@@ -45,7 +48,7 @@ resource "aws_cloudfront_origin_access_identity" "read_s3_from_cf" {
 }
 
 resource "aws_cloudfront_response_headers_policy" "cache_control" {
-  name    = "cache-control-policy"
+  name    = "cache-control-for-web"
   comment = "Force the assets cached in browser"
 
   custom_headers_config {
@@ -56,7 +59,6 @@ resource "aws_cloudfront_response_headers_policy" "cache_control" {
     }
   }
 }
-
 
 resource "aws_cloudfront_distribution" "website" {
   origin {
@@ -71,7 +73,7 @@ resource "aws_cloudfront_distribution" "website" {
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
-  aliases             = [var.root_domain_name]
+  aliases             = local.website_domains
   http_version        = "http2and3"
 
   custom_error_response {

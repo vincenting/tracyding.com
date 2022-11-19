@@ -2,24 +2,15 @@ resource "aws_route53_zone" "primary" {
   name = var.root_domain_name
 }
 
-module "acm_request_certificate" {
-  source = "cloudposse/acm-request-certificate/aws"
-  providers = {
-    aws = aws.us_region
-  }
-
-  ttl                       = "300"
-  zone_id                   = aws_route53_zone.primary.zone_id
-  domain_name               = var.root_domain_name
-  subject_alternative_names = ["www.${var.root_domain_name}"]
-
-  wait_for_certificate_issued       = true
-  process_domain_validation_options = true
+locals {
+  website_domains = [var.root_domain_name, "www.${var.root_domain_name}"]
 }
 
 resource "aws_route53_record" "root" {
+  for_each = toset(local.website_domains)
+
   zone_id = aws_route53_zone.primary.zone_id
-  name    = var.root_domain_name
+  name    = each.key
   type    = "A"
 
   alias {

@@ -17,7 +17,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: 'tf'
+        working-directory: "tf"
 
     steps:
       - name: Checkout
@@ -25,7 +25,7 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
-  
+
       - name: Terraform Init
         run: terraform init
         env:
@@ -35,7 +35,7 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate -no-color
-        
+
       - name: Terraform Plan
         run: terraform plan -input=false
         env:
